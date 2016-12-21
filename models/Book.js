@@ -3,16 +3,16 @@ export default (sequelize, DataType) => {
     id: {
       type: DataType.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     name: {
       type: DataType.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true
-      }
-    }
+        notEmpty: true,
+      },
+    },
   });
 
   return Book;
-}
+};
