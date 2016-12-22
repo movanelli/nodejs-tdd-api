@@ -6,10 +6,13 @@ This is an application that returns a list of books, created to apply the best p
 1. Clone repository.
 2. Install dependencies.
 3. Run tests.
+4. Run ESlint.
 
 ```console
 git clone git@github.com:mshmeirelles/nodejs-tdd-api.git books-api
 cd books-api
 npm install
 npm run test-integration
+npm run test-unit
+npm run lint
 ```
