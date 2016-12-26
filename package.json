@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run lint && npm run test-unit && npm run test-integration",
     "test-integration": "NODE_ENV=test mocha --opts test/integration/mocha.opts test/integration/*.js",
     "test-unit": "NODE_ENV=test mocha --opts test/unit/mocha.opts test/unit/**/*.js",
     "lint": "eslint '**/*.js'",
-    "lint:fix": "eslint '**/*.js' --fix"
+    "lint:fix": "eslint '**/*.js' --fix",
+    "coveralls": "npm run cover-unit --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "cover-integration": "NODE_ENV=test istanbul cover _mocha -- --opts test/integration/mocha.opts test/integration/*.js",
+    "cover-unit": "NODE_ENV=test istanbul cover _mocha -- --opts test/unit/mocha.opts test/unit/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -23,12 +26,15 @@
   "homepage": "https://github.com/mshmeirelles/nodejs-tdd-api#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
+    "istanbul": "^1.0.0-alpha",
     "mocha": "^3.2.0",
+    "mocha-lcov-reporter": "^1.2.0",
     "supertest": "^2.0.1",
     "testdouble": "^1.10.1"
   },
