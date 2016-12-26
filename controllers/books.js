@@ -1,10 +1,10 @@
 const defaultResponse = (data, statusCode = 200) => ({
   data,
-  statusCode
+  statusCode,
 });
 
 const errorResponse = (message, statusCode = 400) => defaultResponse({
-  error: message
+  error: message,
 }, statusCode);
 
 class BooksController {
