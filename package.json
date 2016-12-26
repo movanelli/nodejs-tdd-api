@@ -10,7 +10,7 @@
     "test-unit": "NODE_ENV=test mocha --opts test/unit/mocha.opts test/unit/**/*.js",
     "lint": "eslint '**/*.js'",
     "lint:fix": "eslint '**/*.js' --fix",
-    "coveralls": "npm run cover-unit --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "coveralls": "npm run cover-unit --report lcovonly && npm run cover-integration --report lcovonly  && cat ./coverage/lcov.info | coveralls",
     "cover-integration": "NODE_ENV=test istanbul cover _mocha -- --opts test/integration/mocha.opts test/integration/*.js",
     "cover-unit": "NODE_ENV=test istanbul cover _mocha -- --opts test/unit/mocha.opts test/unit/**/*.js"
   },
