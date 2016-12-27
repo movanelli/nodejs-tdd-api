@@ -1,5 +1,10 @@
+import jwt from 'jwt-simple';
+
+
 describe('Routes Users', () => {
   const User = app.datasource.models.User;
+  const jwtSecret = app.config.jwtSecret;
+
   const defaultUser = {
     id: 1,
     name: 'Default User',
@@ -7,12 +12,22 @@ describe('Routes Users', () => {
     password: 'test',
   };
 
+  let token;
+
   beforeEach((done) => {
     User
       .destroy({ where: {} })
-      .then(() => User.create(defaultUser))
-      .then(() => {
-        done();
+      .then(() => User.create({
+        name: 'John',
+        email: 'john@mail.com',
+        password: '123456',
+      }))
+      .then((user) => {
+        User.create(defaultUser)
+          .then(() => {
+            token = jwt.encode({ id: user.id }, jwtSecret);
+            done();
+          });
       });
   });
 
@@ -20,6 +35,7 @@ describe('Routes Users', () => {
     it('must return a list of users', (done) => {
       request
         .get('/users')
+        .set('Authorization', `JWT ${token}`)
         .end((err, res) => {
           expect(res.body[0].id).to.be.eql(defaultUser.id);
           expect(res.body[0].name).to.be.eql(defaultUser.name);
@@ -34,6 +50,7 @@ describe('Routes Users', () => {
     it('must return a user', (done) => {
       request
         .get('/users/1')
+        .set('Authorization', `JWT ${token}`)
         .end((err, res) => {
           expect(res.body.id).to.be.eql(defaultUser.id);
           expect(res.body.name).to.be.eql(defaultUser.name);
@@ -55,6 +72,7 @@ describe('Routes Users', () => {
 
       request
         .post('/users')
+        .set('Authorization', `JWT ${token}`)
         .send(newUser)
         .end((err, res) => {
           expect(res.body.id).to.be.eql(newUser.id);
@@ -76,6 +94,7 @@ describe('Routes Users', () => {
 
       request
         .put('/users/1')
+        .set('Authorization', `JWT ${token}`)
         .send(updatedUser)
         .end((err, res) => {
           expect(res.body).to.be.eql([1]);
@@ -89,6 +108,7 @@ describe('Routes Users', () => {
     it('must delete a user', (done) => {
       request
         .delete('/users/1')
+        .set('Authorization', `JWT ${token}`)
         .end((err, res) => {
           expect(res.statusCode).to.be.eql(204);
 

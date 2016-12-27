@@ -5,6 +5,7 @@ export default(app) => {
   const booksController = new BooksController(app.datasource.models.Book);
 
   app.route('/books')
+    .all(app.auth.authenticate())
     .get((req, res) => {
       booksController.getAll()
         .then((response) => {
@@ -21,6 +22,7 @@ export default(app) => {
     });
 
   app.route('/books/:id')
+    .all(app.auth.authenticate())
     .get((req, res) => {
       booksController.getById(req.params)
         .then((response) => {
