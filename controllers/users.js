@@ -10,42 +10,42 @@ const errorResponse = (message, statusCode = HttpStatus.BAD_REQUEST) => defaultR
   error: message,
 }, statusCode);
 
-class BooksController {
+class UsersController {
 
-  constructor(Book) {
-    this.Book = Book;
+  constructor(User) {
+    this.User = User;
   }
 
   getAll() {
-    return this.Book.findAll({})
+    return this.User.findAll({})
       .then(result => defaultResponse(result))
       .catch(error => errorResponse(error.message));
   }
 
   getById(params) {
-    return this.Book.findOne({ where: params })
+    return this.User.findOne({ where: params })
       .then(result => defaultResponse(result))
       .catch(error => errorResponse(error.message));
   }
 
   create(data) {
-    return this.Book.create(data)
+    return this.User.create(data)
       .then(result => defaultResponse(result, HttpStatus.CREATED))
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
   update(data, params) {
-    return this.Book.update(data, { where: params })
+    return this.User.update(data, { where: params })
       .then(result => defaultResponse(result))
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
   delete(params) {
-    return this.Book.destroy({ where: params })
+    return this.User.destroy({ where: params })
       .then(result => defaultResponse(result, HttpStatus.NO_CONTENT))
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
 }
 
-export default BooksController;
+export default UsersController;
