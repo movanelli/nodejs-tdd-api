@@ -20,4 +20,4 @@ npm test
 
 ## Authentication
 
-Just POST your email and password to /token and you receive your token to access api endpoints.
+Just POST your email and password to `/token` and you receive your token to access api endpoints.
