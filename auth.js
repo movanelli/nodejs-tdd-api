@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
 
-export default app => {
+export default (app) => {
   const User = app.datasource.models.User;
   const opts = {};
 
@@ -11,11 +11,13 @@ export default app => {
 
   const strategy = new Strategy(opts, (payload, done) => {
     User.findById(payload.id)
-      .then(user => {
-        if(user) return done(null, {
-          id: user.id,
-          email: user.email
-        });
+      .then((user) => {
+        if (user) {
+          return done(null, {
+            id: user.id,
+            email: user.email,
+          });
+        }
 
         return done(null, false);
       })
@@ -27,5 +29,5 @@ export default app => {
   return {
     initialize: () => passport.initialize(),
     authenticate: () => passport.authenticate('jwt', app.config.jwtSecret),
-  }
-}
+  };
+};
