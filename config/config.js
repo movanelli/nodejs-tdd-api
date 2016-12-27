@@ -9,4 +9,6 @@ export default {
       underscored: true,
     },
   },
+  jwtSecret: 'Secr3t',
+  jwtSession: { session: false }
 };
