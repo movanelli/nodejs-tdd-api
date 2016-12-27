@@ -15,18 +15,18 @@ describe('Routes Books', () => {
   let token;
 
   beforeEach((done) => {
-    User
+    Book
       .destroy({ where: {} })
-      .then(() => User.create({
-        name: 'John Doe',
-        email: 'john@mail.com',
-        password: '12345',
-      }))
-      .then((user) => {
-        Book
+      .then(() => Book.create(defaultBook))
+      .then(() => {
+        User
           .destroy({ where: {} })
-          .then(() => Book.create(defaultBook))
-          .then(() => {
+          .then(() => User.create({
+            name: 'John Doe',
+            email: 'john@mail.com',
+            password: '12345',
+          }))
+          .then((user) => {
             token = jwt.encode({ id: user.id }, jwtSecret);
             done();
           });
